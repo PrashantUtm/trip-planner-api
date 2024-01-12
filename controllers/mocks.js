@@ -21,7 +21,13 @@ const getMockedUser = ((req, res) => {
 });
 
 const getMockedTrips = ((req, res) => {
-    return res.status(200).json(trips);
+    return res.status(200).json(trips.map(trip => ({ 
+        id: trip.id, 
+        title: trip.title, 
+        startDestination: trip.startDestination, 
+        finalDestination: trip.finalDestination,
+        budget: trip.budget
+    })));
 });
 
 const getMockedTrip = ((req, res) => {

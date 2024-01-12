@@ -15,8 +15,8 @@ router.get('/trips/', getMockedTrips);
 router.get('/trips/:id', getMockedTrip);
 router.post('/trips/', createMockedTrip);
 router.put('/trips/:id', updateMockedTrip);
-router.put('/users/', getMockedUsers);
-router.put('/users/:id', getMockedUser);
-router.put('/users/', createMockedUser);
+router.get('/users/', getMockedUsers);
+router.get('/users/:id', getMockedUser);
+router.post('/users/', createMockedUser);
 
 module.exports = router;

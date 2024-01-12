@@ -2,7 +2,16 @@ const Trip = require('../models/Trip.js');
 
 const getTrips = ((req, res) => {
     Trip.find({})
-        .then(result => res.status(200).json({ result}))
+        .then(result => {
+            const trips = result.map(trip => ({ 
+                id: trip.id, 
+                title: trip.title, 
+                startDestination: trip.startDestination, 
+                finalDestination: trip.finalDestination,
+                budget: trip.budget
+            }));
+            res.status(200).json({ trips})
+        })
         .catch(error => res.status(500).json({msg: error}));
 });
 
