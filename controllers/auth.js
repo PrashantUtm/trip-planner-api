@@ -31,8 +31,8 @@ const login = async (req, res, next) => {
                 maxAge: maxAge * 1000, // 3hrs in ms
             });
             res.status(201).json({
-                message: "User successfully Logged in",
                 user: user.userId,
+                token: token
             });
         }
     } catch (error) {
