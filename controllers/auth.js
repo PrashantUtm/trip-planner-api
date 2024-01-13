@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
+const users = require('../data/users.js');
 const jwtSecret = '6b49b1141686633a0884ca3688723e6758461c0c17b9e57490586dd7ec5817df699310';
 
 const login = async (req, res, next) => {
@@ -11,7 +12,12 @@ const login = async (req, res, next) => {
         })
     }
     try {
-        const user = await User.findOne({ userId })
+        if (process.env.USE_DB === 'true') {
+          const user = await User.findOne({ userId })
+        } else {
+          const user = users.find(u => u.userId === userId)
+        }
+        
         if (!user) {
         res.status(400).json({
             message: "Login not successful",

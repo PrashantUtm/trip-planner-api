@@ -9,11 +9,15 @@ const port = process.env.PORT || 5000;
 
 require('dotenv').config();
 
+if (process.env.USE_DB === 'true')
+{
 mongoose.connect(process.env.MONGO_URI)
   .then((result) => app.listen(port))
   .catch((err) => console.log(err));
+} else {
+  app.listen(port)
+}
 
-//app.listen(port)
 
 app.use(express.json());
 
