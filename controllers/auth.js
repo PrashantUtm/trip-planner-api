@@ -12,10 +12,11 @@ const login = async (req, res, next) => {
         })
     }
     try {
+        let user;
         if (process.env.USE_DB === 'true') {
-          const user = await User.findOne({ userId })
+          user = await User.findOne({ userId })
         } else {
-          const user = users.find(u => u.userId === userId)
+          user = users.find(u => u.userId === userId)
         }
         
         if (!user) {
