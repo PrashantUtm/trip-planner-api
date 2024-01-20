@@ -50,8 +50,20 @@ const login = async (req, res, next) => {
     }
 };
 
+const getUserId = (token) => {
+  if (token) {
+    jwt.verify(token, jwtSecret, (err, decodedToken) => {
+      if (decodedToken) {
+        console.log(decodedToken)
+        return decodedToken.id
+      }
+    })
+    
+  }
+}
+
 const auth = (req, res, next) => {
-    const token = req.headers.auth
+    const token = req.headers.authorization
     if (token) {
       jwt.verify(token, jwtSecret, (err, decodedToken) => {
         if (err) {
@@ -71,5 +83,6 @@ const auth = (req, res, next) => {
 
 module.exports = {
     login,
-    auth
+    auth,
+    getUserId
 };

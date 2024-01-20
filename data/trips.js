@@ -22,6 +22,13 @@ const trips = [
       ],
       otherDestinations: [
         { name: 'Uganda', date: new Date(2022, 10, 21) }
+      ],
+      checklistItems: [
+        { title: "do something", checked: true },
+        { title: "do something1", checked: false },
+        { title: "do somethin2", checked: false },
+        { title: "do somethin3", checked: true },
+        { title: "do somethin4", checked: false },
       ]
     },
   ];

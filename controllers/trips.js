@@ -1,9 +1,14 @@
 const Trip = require('../models/Trip.js');
+const { getUserId } = require('./auth.js');
 
 const getTrips = ((req, res) => {
     Trip.find({})
-        .then(result => {
-            const trips = result.map(trip => ({ 
+        .then(result => {    
+            const token = req.headers.authorization;
+            const userId = getUserId(token);
+            const trips = result
+            .filter(trip => trip.travellers.contains(t => t.userId === userId))
+            .map(trip => ({ 
                 id: trip.id, 
                 title: trip.title, 
                 startDestination: trip.startDestination, 
@@ -17,11 +22,14 @@ const getTrips = ((req, res) => {
 
 const getTrip = ((req, res) => {
     const id = String(req.params.id);
-    const trip = trips.find(trip => trip.id == id);
-    if (!trip) {
-        return res.status(404).send('Trip not found');
-    }
-    res.json(trip);
+    Trip.find({ id: id })
+    .then(result => {
+        if (!result) {
+            return res.status(404).send('Trip not found');
+        }
+        return res.json(result);
+    })
+    .catch(error => res.status(500).json({msg: error}));
 });
 
 const createTrip = ((req, res) => {

@@ -46,7 +46,7 @@ const createMockedTrip = ((req, res) => {
 });
 
 const updateMockedTrip = ((req, res) => {
-    const id = Number(req.params.id)
+    const id = String(req.params.id)
     const index = trips.findIndex(trip => trip.id === id)
     if (index >= 0) {
         trips[index] = req.body;

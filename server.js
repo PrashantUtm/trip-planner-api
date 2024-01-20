@@ -23,13 +23,18 @@ app.use(express.json());
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     next();
   });
+
+app.options('/*', (_, res) => {
+  res.sendStatus(200);
+});
 
 const { auth } = require('./controllers/auth.js');
 
 app.use('/api/trips', auth, trips_routes);
 app.use('/api/users', auth, users_routes);
 app.use('/api/login', auth_routes);
-app.use('/api/mocks', mocked_routes);
+app.use('/api/mocks', auth, mocked_routes);
