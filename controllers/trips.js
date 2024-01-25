@@ -7,7 +7,7 @@ const getTrips = ((req, res) => {
             const token = req.headers.authorization;
             const userId = getUserId(token);
             const trips = result
-            .filter(trip => trip.travellers.contains(t => t.userId === userId))
+            .filter(trip => trip.travellers.some(t => t.userId == userId))
             .map(trip => ({ 
                 id: trip.id, 
                 title: trip.title, 

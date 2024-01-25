@@ -25,17 +25,17 @@ const login = async (req, res, next) => {
             error: "User not found",
         })
         } else {
-            const maxAge = 3 * 60 * 60;
+            const maxAge = 24 * 60 * 60;
             const token = jwt.sign(
                 { id: userId },
                 jwtSecret,
                 {
-                    expiresIn: maxAge, // 3hrs in sec
+                    expiresIn: maxAge, // 24hrs in sec
                 }
             );
             res.cookie("jwt", token, {
                 httpOnly: true,
-                maxAge: maxAge * 1000, // 3hrs in ms
+                maxAge: maxAge * 1000, // 24hrs in ms
             });
             res.status(201).json({
                 user: user.userId,
@@ -51,15 +51,15 @@ const login = async (req, res, next) => {
 };
 
 const getUserId = (token) => {
+  let userId;
   if (token) {
     jwt.verify(token, jwtSecret, (err, decodedToken) => {
       if (decodedToken) {
-        console.log(decodedToken)
-        return decodedToken.id
+        userId = decodedToken.id
       }
     })
-    
   }
+  return String(userId);
 }
 
 const auth = (req, res, next) => {

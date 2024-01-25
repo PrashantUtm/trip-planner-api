@@ -8,13 +8,16 @@ const auth_routes = require('./routes/auth.js');
 const port = process.env.PORT || 5000;
 
 require('dotenv').config();
-
 if (process.env.USE_DB === 'true')
 {
 mongoose.connect(process.env.MONGO_URI)
-  .then((result) => app.listen(port))
+  .then((result) => {
+    app.listen(port)
+    console.log("running DB");
+  })
   .catch((err) => console.log(err));
 } else {
+  console.log("running without DB");
   app.listen(port)
 }
 
