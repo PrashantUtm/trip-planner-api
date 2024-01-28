@@ -53,17 +53,7 @@ const createMockedTrip = ((req, res) => {
     const newTrip = req.body;
     const token = req.headers.authorization;
     const userId = getUserId(token);
-    if (
-        !newTrip.title || 
-        !newTrip.startDestination ||
-        !newTrip.startDestination.name ||
-        !newTrip.startDestination.date ||
-        !newTrip.finalDestination.name ||
-        !newTrip.finalDestination.date ||
-        !newTrip.travellers ||
-        !newTrip.travellers.some(t => t.userId == userId) ||
-        !newTrip.budget
-    ) {
+    if (!validateTrip(newTrip, userId)) {
         res.status(400).json('Missing required data')
     }
     trips.push(newTrip)
@@ -71,7 +61,13 @@ const createMockedTrip = ((req, res) => {
 });
 
 const updateMockedTrip = ((req, res) => {
+    const updatedTrip = req.body
     const id = String(req.params.id)
+    const token = req.headers.authorization;
+    const userId = getUserId(token);
+    if (!validateTrip(updatedTrip, userId)) {
+        return res.status(400).json('Missing required data')
+    }
     const index = trips.findIndex(trip => trip.id === id)
     if (index >= 0) {
         trips[index] = req.body;
@@ -80,6 +76,17 @@ const updateMockedTrip = ((req, res) => {
         res.status(204).send('Trip not found')
     }
 });
+
+const validateTrip = (trip, userId) => 
+    trip.title && 
+    trip.startDestination &&
+    trip.startDestination.name &&
+    trip.startDestination.date &&
+    trip.finalDestination.name &&
+    trip.finalDestination.date &&
+    trip.travellers &&
+    trip.travellers.some(t => t.userId === userId) &&
+    trip.budget;
 
 module.exports = {
     getMockedTrips,
