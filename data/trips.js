@@ -31,6 +31,29 @@ const trips = [
         { title: "do somethin4", checked: false },
       ]
     },
+    ,
+    {
+      id: '3',
+      title: 'Latino 2023',
+      budget: 250000,
+      startDestination: { name: 'Brazil', date: new Date(2023, 10, 17) },
+      finalDestination: { name: 'Mauritius', date: new Date(2023, 11, 17) },
+      travellers: [
+        { userId: '33333', role: 'Organiser' }
+      ],
+      otherDestinations: [
+        { name: 'Argentina', date: new Date(2023, 10, 23) },
+        { name: 'Peru', date: new Date(2023, 10, 30) },
+        { name: 'Puerto Rico', date: new Date(2023, 11, 10) }
+      ],
+      checklistItems: [
+        { title: "do something", checked: true },
+        { title: "do something1", checked: false },
+        { title: "do somethin2", checked: false },
+        { title: "do somethin3", checked: true },
+        { title: "do somethin4", checked: false },
+      ]
+    },
   ];
 
 module.exports = trips
