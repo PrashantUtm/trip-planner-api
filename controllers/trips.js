@@ -60,7 +60,12 @@ const updateTrip = ((req, res) => {
         return res.status(400).json('Missing required data')
     }
     Trip.updateOne({ id: id }, req.body)
-        .then(result => res.status(200).json({ result }))
+        .then(result => {
+            Trip.findOne({ id: id })
+                .then(trip => {
+                return res.status(200).json(trip);
+            })
+        })
         .catch((error) => res.status(500).json({msg:  error }));
 });
 
