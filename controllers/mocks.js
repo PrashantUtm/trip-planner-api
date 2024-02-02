@@ -1,6 +1,7 @@
 const trips = require('../data/trips.js');
 const users = require('../data/users.js');
 const { getUserId } = require('./auth.js');
+const { randomUUID } = require('crypto');
 
 const getMockedUsers = ((req, res) => {
     return res.status(200).json(users);
@@ -39,7 +40,7 @@ const getMockedTrip = ((req, res) => {
     const id = String(req.params.id);
     const token = req.headers.authorization;
     const userId = getUserId(token);
-    const trip = trips.find(trip => trip.id == id);
+    const trip = trips.find(trip => trip?.id == id);
     if (!trip) {
         return res.status(404).send('Trip not found');
     }
@@ -56,6 +57,7 @@ const createMockedTrip = ((req, res) => {
     if (!validateTrip(newTrip, userId)) {
         res.status(400).json('Missing required data')
     }
+    newTrip['id'] = randomUUID();
     trips.push(newTrip)
     res.status(201).json(newTrip)
 });
