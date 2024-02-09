@@ -16,7 +16,7 @@ const getTrips = ((req, res) => {
                 finalDestination: trip.finalDestination,
                 budget: trip.budget
             }));
-            res.status(200).json({ trips})
+            res.status(200).json(trips)
         })
         .catch(error => res.status(500).json({msg: error}));
 });

@@ -70,7 +70,7 @@ const updateMockedTrip = ((req, res) => {
     if (!validateTrip(updatedTrip, userId)) {
         return res.status(400).json('Missing required data')
     }
-    const index = trips.findIndex(trip => trip.id === id)
+    const index = trips.findIndex(trip => trip?.id === id)
     if (index >= 0) {
         trips[index] = req.body;
         res.status(200).send(trips[index])

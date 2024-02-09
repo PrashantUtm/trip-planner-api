@@ -8,7 +8,8 @@ const TripSchema = new mongoose.Schema({
     finalDestination: { name: String, date: Date },
     travellers: [{ userId: String, role: String }],
     otherDestinations: [{ name: String, date: Date }],
-    checklistItems: [{ title: String, checked: Boolean }]
+    checklistItems: [{ title: String, checked: Boolean }],
+    photos: []
 });
 
 const Trip = mongoose.model('Trip', TripSchema);
